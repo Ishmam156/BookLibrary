@@ -32,12 +32,20 @@ if (localLibrary) {
   myLibrary = [];
 }
 
-function Book(title, author, pages, read) {
+function Book(
+  title,
+  author,
+  pages,
+  read,
+  cover = "https://www.dremed.com/assets/img/placeholder-large.jpg"
+) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.cover = cover;
   this.id = guid();
+  this;
   this.info = () =>
     `${title} by ${author}, ${pages} ${pages > 1 ? "pages" : "page"}, ${
       read ? "read" : "not read yet"
@@ -48,9 +56,27 @@ Book.prototype.toggleRead = function () {
   this.read = !this.read;
 };
 
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
-const HarryPotter = new Book("Harry Potter", "J. K Rowling", 321, true);
-const Sapiens = new Book("Sapines", "Yuval Noah Harari", 431, false);
+const theHobbit = new Book(
+  "The Hobbit",
+  "J. R. R. Tolkien",
+  310,
+  false,
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfXUAnNdQzfCXkKK5bIDIqra5RU1tK85JY0A&usqp=CAU"
+);
+const HarryPotter = new Book(
+  "Harry Potter and the Goblet of Fire",
+  "J. K. Rowling",
+  636,
+  true,
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKQvDR77Kjpga3ocDqNGauuU3tuoiYhn8nkA&usqp=CAU"
+);
+const Sapiens = new Book(
+  "Sapiens: A brief history of humankind",
+  "Yuval Noah Harari",
+  443,
+  false,
+  "https://static-01.daraz.com.bd/p/mdc/49bb96ca28deb33b4da1ed4fdce15a75.png"
+);
 
 if (myLibrary.length === 0) {
   myLibrary.push(theHobbit);
@@ -69,12 +95,14 @@ document.querySelector("form").addEventListener("submit", (event) => {
     author: input.author.value,
     pages: input.pages.value,
     readStatus: input.readStatus.value,
+    cover: input.cover.value,
   });
 
   input.title.value = "";
   input.author.value = "";
   input.pages.value = "";
   input.readStatus.value = "";
+  input.cover.value = "";
 });
 
 function addBookToLibrary(userInput) {
@@ -82,7 +110,8 @@ function addBookToLibrary(userInput) {
     userInput.title,
     userInput.author,
     Number(userInput.pages),
-    userInput.readStatus === "read" ? true : false
+    userInput.readStatus === "read" ? true : false,
+    userInput.cover
   );
   myLibrary.push(newBook);
   localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
@@ -115,13 +144,21 @@ function displayLibrary() {
       "ml-auto",
       "text-center",
       "mt-3",
-      "col-4"
+      "col-lg-4",
+      "col-md-6"
     );
 
     const innerDiv = document.createElement("div");
     innerDiv.classList.add("card", "align-items-center");
-    innerDiv.style.height = "250px";
-    innerDiv.style.flexDirection = "row";
+
+    const image = document.createElement("img");
+    image.classList.add("card-img-top");
+    image.src = book.cover;
+    image.alt = "Book Cover";
+    image.style.height = "150px";
+    image.style.width = "150px";
+
+    innerDiv.appendChild(image);
 
     const cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
