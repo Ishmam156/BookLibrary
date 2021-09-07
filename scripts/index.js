@@ -27,25 +27,21 @@ let myLibrary;
 const localLibrary = localStorage.getItem("myLibrary");
 
 if (localLibrary) {
-  console.log(localLibrary);
   myLibrary = JSON.parse(localLibrary);
 } else {
   myLibrary = [];
 }
 
 // Constructor for Books
-function Book(
-  title,
-  author,
-  pages,
-  read,
-  cover = "https://www.dremed.com/assets/img/placeholder-large.jpg"
-) {
+function Book(title, author, pages, read, cover) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.cover = cover;
+  this.cover =
+    cover === ""
+      ? "https://www.dremed.com/assets/img/placeholder-large.jpg"
+      : cover;
   this.id = guid();
   this;
   this.info = () =>
@@ -120,6 +116,12 @@ document.querySelector("form").addEventListener("submit", (event) => {
   input.pages.value = "";
   input.readStatus.value = "";
   input.cover.value = "";
+
+  document.getElementById("bookAlert").classList.toggle("disableAlert");
+
+  setTimeout(() => {
+    document.getElementById("bookAlert").classList.toggle("disableAlert");
+  }, 2000);
 });
 
 // Helper functions to handle toggle reading status and deleting book

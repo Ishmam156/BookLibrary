@@ -24,6 +24,7 @@ You can check out the webpage [here](https://ishmam156.github.io/BookLibrary/):
 - Can toggle read status
 - Persists data in localStorage
 - Defaults to a blank photo if user doesn't provide a cover
+- Show alert on book addition success
 
 ## Acknowledgements
 

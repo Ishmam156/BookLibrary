@@ -57,14 +57,17 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="alert alert-success disableAlert" id='bookAlert' role="alert">
+                            Your book has been added to the library!
+                        </div>
                         <form>
                             <div class="mb-3 mt-3">
                                 <label for="title" class="form-label">Book Title</label>
-                                <input name='title' type="text" class="form-control" id="title" required autofocus>
+                                <input name='title' type="text" class="form-control" id="title" required>
                             </div>
                             <div class="mb-3 mt-3">
                                 <label for="author" class="form-label">Author's Name</label>
-                                <input name='author' type="text" class="form-control" id="author">
+                                <input name='author' type="text" class="form-control" id="author" required>
                             </div>
                             <div class="mb-3 mt-3">
                                 <label for="author" class="form-label">Book Cover</label>
