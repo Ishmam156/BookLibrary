@@ -10,7 +10,7 @@ You can check out the webpage [here](https://ishmam156.github.io/BookLibrary/):
 
 #### Home Page
 
-![Website Image](https://i.imgur.com/5xQG6p6.png)
+![Website Image](https://i.imgur.com/7lXRDhu.png)
 
 ## Tech Stack
 
