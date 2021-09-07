@@ -4,13 +4,17 @@ A JS based project that acts as a book library and will persist its storage in t
 
 ## Live Website
 
-You can check out the webpage [here](https://ishmam156.github.io/BookLibrary/):
+You can check out the webpage [here](https://ishmam156.github.io/BookLibrary/)
 
 ## Demo
 
 #### Home Page
 
 ![Website Image](https://i.imgur.com/7lXRDhu.png)
+
+#### Book Add Modal
+
+![Book Add Image](https://i.imgur.com/N1mTJ1j.png)
 
 ## Tech Stack
 
