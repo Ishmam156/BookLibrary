@@ -13,11 +13,13 @@
 </head>
 
 <body>
+    <!-- Top Bar -->
     <nav class="navbar navbar-dark bg-primary">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1">My Library</span>
         </div>
     </nav>
+    <!-- Main body of the website -->
     <div class="container">
 
         <div class="col">
@@ -25,7 +27,6 @@
                 <h3>Welcome to your Library!</h3>
             </div>
         </div>
-
         <div class="col">
             <div class="mr-auto ml-auto text-center mt-3">
                 <p><em>All of your current books</em></p>
@@ -33,12 +34,13 @@
             </div>
         </div>
 
+        <!-- Books to be added here through JS -->
         <div id='bookDisplay' class="row">
         </div>
 
+        <!-- Button trigger modal -->
         <div class="col">
             <div class="mr-auto ml-auto text-center mt-3">
-                <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">
                     Add Book

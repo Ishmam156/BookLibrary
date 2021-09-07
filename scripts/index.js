@@ -1,4 +1,4 @@
-//generates random id;
+// Function to generate unique random ID to keep track of books
 let guid = () => {
   let s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -23,6 +23,7 @@ let guid = () => {
 
 let myLibrary;
 
+// Check if library is present in localStorge and if it is, use that one
 const localLibrary = localStorage.getItem("myLibrary");
 
 if (localLibrary) {
@@ -32,6 +33,7 @@ if (localLibrary) {
   myLibrary = [];
 }
 
+// Constructor for Books
 function Book(
   title,
   author,
@@ -56,6 +58,7 @@ Book.prototype.toggleRead = function () {
   this.read = !this.read;
 };
 
+// Create a few books to be present initially and push to Library
 const theHobbit = new Book(
   "The Hobbit",
   "J. R. R. Tolkien",
@@ -86,6 +89,20 @@ if (myLibrary.length === 0) {
 
 localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
 
+// Handle submission of new book from user
+function addBookToLibrary(userInput) {
+  const newBook = new Book(
+    userInput.title,
+    userInput.author,
+    Number(userInput.pages),
+    userInput.readStatus === "read" ? true : false,
+    userInput.cover
+  );
+  myLibrary.push(newBook);
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+  displayLibrary();
+}
+
 document.querySelector("form").addEventListener("submit", (event) => {
   event.preventDefault();
   const input = event.target;
@@ -105,19 +122,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
   input.cover.value = "";
 });
 
-function addBookToLibrary(userInput) {
-  const newBook = new Book(
-    userInput.title,
-    userInput.author,
-    Number(userInput.pages),
-    userInput.readStatus === "read" ? true : false,
-    userInput.cover
-  );
-  myLibrary.push(newBook);
-  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
-  displayLibrary();
-}
-
+// Helper functions to handle toggle reading status and deleting book
 function removeBook(id) {
   myLibrary = myLibrary.filter((book) => book.id !== id);
   localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
@@ -132,9 +137,11 @@ function toggleRead(id) {
   displayLibrary();
 }
 
+// Handle how books will be displayed in DOM with card structure
 function displayLibrary() {
   const displayDiv = document.getElementById("bookDisplay");
 
+  // Reset display to ensure no previous elements remain
   displayDiv.innerHTML = "";
 
   myLibrary.forEach((book) => {
@@ -151,34 +158,38 @@ function displayLibrary() {
     const innerDiv = document.createElement("div");
     innerDiv.classList.add("card", "align-items-center");
 
+    // Book Cover Element
     const image = document.createElement("img");
     image.classList.add("card-img-top");
     image.src = book.cover;
     image.alt = "Book Cover";
     image.style.height = "150px";
     image.style.width = "150px";
-
     innerDiv.appendChild(image);
 
     const cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
 
+    // Book Title Element
     const title = document.createElement("h5");
     title.classList.add("card-title");
     title.textContent = book.title;
 
+    // Book Author Element
     const author = document.createElement("p");
     author.classList.add("card-text");
     const authorName = document.createElement("em");
     authorName.textContent = book.author;
     author.appendChild(authorName);
 
+    // Book Page Number Element
     const page = document.createElement("p");
     page.classList.add("card-text");
     const pageNumber = document.createElement("strong");
     pageNumber.textContent = `${book.pages} pages`;
     page.appendChild(pageNumber);
 
+    // Book Read Status Button
     const readStatus = document.createElement("a");
     readStatus.classList.add(
       "btn",
@@ -189,11 +200,13 @@ function displayLibrary() {
     readStatus.textContent = book.read === true ? "Read" : "Not read yet";
     readStatus.addEventListener("click", () => toggleRead(book.id));
 
+    // Delete Book Button
     const deleteButton = document.createElement("a");
     deleteButton.classList.add("btn", "btn-danger", "m-1");
     deleteButton.textContent = "Delete";
     deleteButton.addEventListener("click", () => removeBook(book.id));
 
+    // Append all child to ensure proper structure
     cardBody.appendChild(title);
     cardBody.appendChild(author);
     cardBody.appendChild(page);
@@ -205,4 +218,5 @@ function displayLibrary() {
   });
 }
 
+// Initial display of library on page load
 displayLibrary();
