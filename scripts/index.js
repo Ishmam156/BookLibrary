@@ -21,7 +21,16 @@ let guid = () => {
   );
 };
 
-let myLibrary = [];
+let myLibrary;
+
+const localLibrary = localStorage.getItem("myLibrary");
+
+if (localLibrary) {
+  console.log(localLibrary);
+  myLibrary = JSON.parse(localLibrary);
+} else {
+  myLibrary = [];
+}
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -35,13 +44,21 @@ function Book(title, author, pages, read) {
     }.`;
 }
 
+Book.prototype.toggleRead = function () {
+  this.read = !this.read;
+};
+
 const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
 const HarryPotter = new Book("Harry Potter", "J. K Rowling", 321, true);
 const Sapiens = new Book("Sapines", "Yuval Noah Harari", 431, false);
 
-myLibrary.push(theHobbit);
-myLibrary.push(HarryPotter);
-myLibrary.push(Sapiens);
+if (myLibrary.length === 0) {
+  myLibrary.push(theHobbit);
+  myLibrary.push(HarryPotter);
+  myLibrary.push(Sapiens);
+}
+
+localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
 
 document.querySelector("form").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -68,11 +85,21 @@ function addBookToLibrary(userInput) {
     userInput.readStatus === "read" ? true : false
   );
   myLibrary.push(newBook);
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
   displayLibrary();
 }
 
 function removeBook(id) {
   myLibrary = myLibrary.filter((book) => book.id !== id);
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+  displayLibrary();
+}
+
+function toggleRead(id) {
+  const book = myLibrary.find((book) => book.id === id);
+  Object.setPrototypeOf(book, Book.prototype);
+  book.toggleRead();
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
   displayLibrary();
 }
 
@@ -123,6 +150,7 @@ function displayLibrary() {
     );
     readStatus.href = "#";
     readStatus.textContent = book.read === true ? "Read" : "Not read yet";
+    readStatus.addEventListener("click", () => toggleRead(book.id));
 
     const deleteButton = document.createElement("a");
     deleteButton.classList.add("btn", "btn-danger", "m-1");
