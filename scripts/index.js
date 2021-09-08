@@ -1,5 +1,4 @@
-// Function to generate unique random ID to keep track of books
-let guid = () => {
+let generateRandomID = () => {
   let s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -42,7 +41,7 @@ function Book(title, author, pages, read, cover) {
     cover === ""
       ? "https://www.dremed.com/assets/img/placeholder-large.jpg"
       : cover;
-  this.id = guid();
+  this.id = generateRandomID();
   this;
   this.info = () =>
     `${title} by ${author}, ${pages} ${pages > 1 ? "pages" : "page"}, ${
