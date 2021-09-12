@@ -32,26 +32,29 @@ if (localLibrary) {
 }
 
 // Constructor for Books
-function Book(title, author, pages, read, cover) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.cover =
-    cover === ""
-      ? "https://www.dremed.com/assets/img/placeholder-large.jpg"
-      : cover;
-  this.id = generateRandomID();
-  this;
-  this.info = () =>
-    `${title} by ${author}, ${pages} ${pages > 1 ? "pages" : "page"}, ${
-      read ? "read" : "not read yet"
-    }.`;
-}
+class Book {
+  constructor(title, author, pages, read, cover) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.cover =
+      cover === ""
+        ? "https://www.dremed.com/assets/img/placeholder-large.jpg"
+        : cover;
+    this.id = generateRandomID();
+  }
 
-Book.prototype.toggleRead = function () {
-  this.read = !this.read;
-};
+  info() {
+    `${this.title} by ${this.author}, ${this.pages} ${
+      this.pages > 1 ? "pages" : "page"
+    }, ${read ? "read" : "not read yet"}.`;
+  }
+
+  toggleRead() {
+    this.read = !this.read;
+  }
+}
 
 // Create a few books to be present initially and push to Library
 const theHobbit = new Book(
